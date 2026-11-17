@@ -76,8 +76,8 @@ ResQLink provides four dedicated role dashboards with demo authentication simula
 
 ```text
 ResQLink/
-├── public/
-├── src/
+├── frontend/
+│   ├── src/
 │   ├── algorithms/
 │   │   ├── priority.js          # Urgency prioritization formula
 │   │   ├── distance.js          # Haversine distance calculator
@@ -117,14 +117,15 @@ ResQLink/
 │   ├── App.jsx                  # Main routing, layout & demo banners
 │   ├── main.jsx                 # Application entry point
 │   └── index.css                # Global styles, Tailwind & Leaflet customizations
-├── supabase/
+├── backend/
+│   └── supabase/
 │   ├── schema.sql               # PostgreSQL tables, indexes & stored procedures
 │   └── seed.sql                 # Sample dataset (8 requests, 8 resources, 6 volunteers)
-├── .env.example                 # Supabase environment variables template
+├── frontend/.env.example        # Supabase environment variables template
 ├── .gitignore                   # Ignored files (node_modules, dist, .env)
-├── package.json                 # Dependencies and build scripts
+├── frontend/package.json        # Dependencies and build scripts
 ├── vercel.json                  # Vercel deployment rewrites for SPA routing
-├── vite.config.js               # Vite configuration with chunk splitting
+├── frontend/vite.config.js      # Vite configuration with chunk splitting
 └── README.md                    # Project documentation
 ```
 
@@ -132,7 +133,7 @@ ResQLink/
 
 ## 6. Algorithmic Implementations
 
-### A. Priority Calculation Algorithm (`src/algorithms/priority.js`)
+### A. Priority Calculation Algorithm (`frontend/src/algorithms/priority.js`)
 
 The priority calculation formula triages incoming emergency requests:
 
@@ -150,7 +151,7 @@ $$\text{priorityScore} = (\text{urgency} \times 20) + (\min(\text{peopleAffected
 
 ---
 
-### B. Haversine Distance Formula (`src/algorithms/distance.js`)
+### B. Haversine Distance Formula (`frontend/src/algorithms/distance.js`)
 
 To compute the approximate great-circle distance between two geographic coordinates $(\text{lat}_1, \text{lon}_1)$ and $(\text{lat}_2, \text{lon}_2)$ on the spherical Earth:
 
@@ -167,7 +168,7 @@ Where:
 
 ---
 
-### C. Multi-Criteria Greedy Matching Algorithm (`src/algorithms/allocation.js`)
+### C. Multi-Criteria Greedy Matching Algorithm (`frontend/src/algorithms/allocation.js`)
 
 For any selected emergency request:
 1. **Resource Category Filter:** Filters resources where `resource_type == request.resource_type`.
@@ -182,7 +183,7 @@ For any selected emergency request:
 
 ---
 
-### D. Data Integrity & Atomic Transactions (`supabase/schema.sql`)
+### D. Data Integrity & Atomic Transactions (`backend/supabase/schema.sql`)
 
 To prevent duplicate allocations and race conditions, allocation confirmation is handled via an atomic PostgreSQL stored procedure:
 
@@ -225,12 +226,13 @@ The project includes realistic fictional seed data centered on an urban disaster
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/your-username/resqlink.git
+git clone https://github.com/ishitasingh16/resqlink.git
 cd resqlink
 ```
 
 ### Step 2: Install Dependencies
 ```bash
+cd frontend
 npm install
 ```
 
@@ -254,17 +256,17 @@ To connect ResQLink to your live Supabase cloud database:
 
 2. **Execute the Database Schema:**
    - In your Supabase dashboard, navigate to **SQL Editor**.
-   - Copy the contents of [`supabase/schema.sql`](supabase/schema.sql) and click **Run**.
+   - Copy the contents of [`backend/supabase/schema.sql`](backend/supabase/schema.sql) and click **Run**.
    - This creates tables, check constraints, indexes, RLS policies, and stored procedures (`approve_allocation`, `complete_allocation`, `reject_allocation`).
 
 3. **Insert the Seed Data:**
-   - In the SQL Editor, copy the contents of [`supabase/seed.sql`](supabase/seed.sql) and click **Run**.
+   - In the SQL Editor, copy the contents of [`backend/supabase/seed.sql`](backend/supabase/seed.sql) and click **Run**.
    - This populates sample requests, donors, volunteers, and allocations.
 
 4. **Configure Environment Variables:**
-   - Copy `.env.example` to `.env`:
+   - Copy `frontend/.env.example` to `frontend/.env`:
      ```bash
-     cp .env.example .env
+     cp frontend/.env.example frontend/.env
      ```
    - Add your Supabase credentials:
      ```env
