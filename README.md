@@ -1,335 +1,756 @@
-# ResQLink
-### An Intelligent Emergency Resource Allocation and Volunteer Coordination Platform
-**Tagline:** *Connecting Help. Saving Time.*
+# 🚨 ResQLink
+### Intelligent Emergency Resource Allocation and Volunteer Coordination Platform
+
+**Tagline: Connecting Help. Saving Time.**
+
+ResQLink is a full-stack, responsive web application designed to improve emergency relief coordination by connecting NGOs, donors, emergency resource providers and volunteers through a centralized platform.
+
+It uses priority-based emergency triage, geographical distance calculation and intelligent resource-volunteer matching to help coordinate relief operations efficiently.
 
 ---
 
-## 1. Project Overview & Problem Statement
+## 📌 Table of Contents
 
-During natural disasters (cyclones, floods, earthquakes) and humanitarian crises, relief coordination suffers from three critical bottlenecks:
-1. **Information Asymmetry:** Non-Governmental Organizations (NGOs) and emergency triage shelters cannot efficiently communicate urgent resource deficits to local donors in real-time.
-2. **Lack of Automated Prioritization:** Relief demands are often fulfilled on a first-come, first-served basis rather than being triaged according to the severity of the crisis and the number of human lives at risk.
-3. **Suboptimal Geographical Logistics:** Relief supplies and volunteers are often dispatched from distant facilities while closer donors or skilled responders remain unutilized, causing life-threatening delivery delays.
-
-**ResQLink** is a full-stack, responsive web application engineered to solve these challenges. Designed as an academic prototype for emergency resource coordination, it dynamically calculates emergency triage scores, computes spherical geographical distance matrices using the Haversine formula, and matches demands with the closest available donors and skilled volunteers.
+1. [Project Overview](#-project-overview)
+2. [Problem Statement](#-problem-statement)
+3. [Project Objectives](#-project-objectives)
+4. [Proposed Solution](#-proposed-solution)
+5. [Key Features](#-key-features)
+6. [System Modules](#-system-modules)
+7. [System Workflow](#-system-workflow)
+8. [User Roles](#-user-roles)
+9. [Technology Stack](#-technology-stack)
+10. [System Architecture](#-system-architecture)
+11. [Project Folder Structure](#-project-folder-structure)
+12. [Algorithms and Technical Implementation](#-algorithms-and-technical-implementation)
+13. [Database Design](#-database-design)
+14. [Installation and Setup](#-installation-and-setup)
+15. [Supabase Configuration](#-supabase-configuration)
+16. [Running the Application](#-running-the-application)
+17. [Deployment](#-deployment)
+18. [Testing and Verification](#-testing-and-verification)
+19. [Limitations](#-limitations)
+20. [Future Enhancements](#-future-enhancements)
+21. [Academic Project Information](#-academic-project-information)
 
 ---
 
-## 2. Proposed Solution & Core Workflow
+## 1. 📖 Project Overview
 
-ResQLink establishes an automated, end-to-end emergency relief supply chain:
+During natural disasters such as floods, cyclones, earthquakes, fires and other humanitarian emergencies, affected communities require immediate access to essential resources such as:
 
+- Food and drinking water
+- Medicines and medical equipment
+- Clothing
+- Temporary shelter
+- Transportation
+- Rescue and emergency assistance
+
+However, information about emergency requirements, available resources, donors and volunteers is often scattered across different organizations.
+
+ResQLink addresses this challenge by providing a centralized digital platform where emergency requests can be submitted, available resources can be registered, volunteers can be managed and suitable allocations can be recommended.
+
+The platform aims to make emergency response more organized, transparent and efficient.
+
+## 2. ⚠️ Problem Statement
+
+Emergency relief coordination commonly faces three major challenges:
+
+**1. Information Asymmetry**
+
+NGOs, donors and emergency response organizations often lack a centralized system to share information about urgent requirements and available resources.
+
+**2. Lack of Automated Prioritization**
+
+Emergency requests may be handled in the order they are received rather than according to urgency, severity and the number of people affected.
+
+**3. Inefficient Geographical Allocation**
+
+Resources and volunteers may be assigned from distant locations even when suitable alternatives are available nearby, resulting in unnecessary delays.
+
+ResQLink aims to address these problems through centralized information management and algorithm-based allocation recommendations.
+
+## 3. 🎯 Project Objectives
+
+The primary objectives are:
+
+- Develop a centralized emergency resource coordination platform.
+- Allow NGOs to submit and monitor emergency requests.
+- Enable donors to register and manage available resources.
+- Maintain volunteer profiles, skills and availability.
+- Automatically calculate emergency priority scores.
+- Calculate geographical distances between requests, resources and volunteers.
+- Recommend suitable resource and volunteer combinations.
+- Prevent duplicate resource allocation and inventory inconsistencies.
+- Provide an interactive geographical map.
+- Improve transparency through request and allocation status tracking.
+
+## 4. 💡 Proposed Solution
+
+ResQLink provides an integrated emergency coordination system.
+
+The application follows this process:
+
+1. An NGO submits an emergency request with its location, resource requirement, quantity and urgency.
+2. The system calculates a priority score.
+3. Available resources are filtered according to resource type, stock and availability.
+4. Suitable resources are ranked according to geographical distance.
+5. Available volunteers are evaluated according to skills, vehicles and proximity.
+6. The system generates allocation recommendations.
+7. An administrator reviews and approves the proposed allocation.
+8. Inventory, volunteer availability and request status are updated.
+9. The mission can be marked as completed after delivery.
+
+---
+
+## 5. ✨ Key Features
+
+### Emergency Request Management
+- Submit emergency requirements.
+- Specify resource category and quantity.
+- Enter affected population and urgency.
+- Record geographical coordinates.
+- View request priority and current status.
+
+### Resource Management
+- Register available relief resources.
+- Manage resource categories and quantities.
+- Monitor inventory availability.
+- Track resource allocation.
+- Prevent allocation beyond available stock.
+
+### Volunteer Management
+- Maintain volunteer profiles.
+- Record skills and competencies.
+- Store vehicle and transportation information.
+- Monitor availability status.
+- Track assigned missions.
+
+### Smart Matching and Allocation
+- Identify suitable resources.
+- Rank resource depots by distance.
+- Match volunteers according to skills.
+- Consider volunteer availability and proximity.
+- Generate transparent allocation recommendations.
+- Support administrator approval.
+
+### Priority Management
+Requests are categorized into:
+
+- 🔴 Critical
+- 🟠 High
+- 🟡 Medium
+- 🟢 Low
+
+### Interactive Map
+- Display emergency request locations.
+- Show resource depot locations.
+- Display volunteer locations.
+- Use different markers for different categories.
+- Visualize geographical distances.
+
+### Dashboard and Monitoring
+- Display emergency statistics.
+- Monitor pending and completed requests.
+- View resource availability.
+- Track volunteer activity.
+- Monitor allocation operations.
+
+---
+
+## 6. 🧩 System Modules
+
+| Module | Description |
+|---|---|
+| Authentication and Role Selection | Provides role-based demo access. |
+| Emergency Request Module | Handles emergency request creation and tracking. |
+| Resource Management | Maintains available inventory and stock. |
+| Volunteer Management | Manages volunteer details, skills and availability. |
+| Priority Calculation | Calculates urgency scores for requests. |
+| Distance Calculation | Computes geographical distances. |
+| Smart Allocation | Recommends suitable resource and volunteer assignments. |
+| Admin Dashboard | Provides centralized operational monitoring. |
+| Map Visualization | Displays requests, resources and volunteers geographically. |
+
+---
+
+## 7. 🔄 System Workflow
+
+```text
+             USERS
+               |
+               ▼
+       ROLE SELECTION
+               |
+               ▼
+      NGO SUBMITS REQUEST
+               |
+               ▼
+      PRIORITY CALCULATION
+               |
+               ▼
+       RESOURCE FILTERING
+               |
+               ▼
+      DISTANCE CALCULATION
+               |
+               ▼
+      VOLUNTEER MATCHING
+               |
+               ▼
+      ALLOCATION PROPOSAL
+               |
+               ▼
+      ADMIN APPROVAL
+               |
+               ▼
+      RESOURCE INVENTORY
+           UPDATED
+               |
+               ▼
+       VOLUNTEER ASSIGNED
+               |
+               ▼
+       MISSION COMPLETED
 ```
-[ NGO Submits Request ] 
-         │
-         ▼
-[ Automated Priority Scoring ] ──► (Urgency Level 1-5 & People Affected)
-         │
-         ▼
-[ Haversine Proximity Search ] ──► (Filter by Resource Type, Status & Inventory)
-         │
-         ▼
-[ Volunteer Skill Matching ]   ──► (Filter by Skills, Vehicle & Availability)
-         │
-         ▼
-[ Transparent Match Diagnostic ] ──► (Ranks closest suitable Depot & Responder)
-         │
-         ▼
-[ Atomic Admin Approval ]      ──► (Locks Inventory & Dispatches Volunteer)
-         │
-         ▼
-[ Mission Fulfillment ]        ──► (Marked Complete & Volunteer Released)
+
+---
+
+## 8. 👥 User Roles
+
+ResQLink provides four role-based demonstration dashboards.
+
+### 1. NGO
+- Submit emergency requests.
+- Specify resource requirements.
+- Enter emergency location.
+- Monitor request priority.
+- Track delivery status.
+
+### 2. Donor
+- Register available resources.
+- Update inventory quantities.
+- Manage resource availability.
+- Monitor allocation and dispatch status.
+
+### 3. Volunteer
+- View assigned missions.
+- Review transportation requirements.
+- Accept or decline tasks.
+- Update availability.
+- Mark completed deliveries.
+
+### 4. Administrator
+- Monitor overall emergency operations.
+- View requests and available resources.
+- Trigger matching recommendations.
+- Review allocation proposals.
+- Approve or reject allocations.
+- Monitor system-wide statistics.
+
+**Note:** The current academic demonstration uses simulated role selection rather than production-grade authentication. It is intended for project evaluation and demonstration.
+
+---
+
+## 9. 🛠️ Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| React 18 | Frontend library and component-based UI |
+| Vite | Frontend development and build tool |
+| JavaScript (ESNext) | Application logic and interactions |
+| HTML5 | Web page structure |
+| CSS3 | Styling and responsive layouts |
+| Tailwind CSS | Utility-based styling |
+| React Router DOM | Client-side navigation |
+| Lucide React | Interface icons |
+| Leaflet | Interactive geographical maps |
+| React-Leaflet | React integration for Leaflet |
+| OpenStreetMap | Map tile provider |
+| Supabase | Backend services and database |
+| PostgreSQL | Relational database |
+| Git and GitHub | Version control and collaboration |
+| Google Antigravity | AI-assisted development environment |
+| Vercel | Application deployment and hosting |
+
+---
+
+## 10. 🏗️ System Architecture
+
+ResQLink follows a frontend, backend-service and database architecture.
+
+```text
+              USERS
+                 |
+                 ▼
+          REACT FRONTEND
+                 |
+        ┌────────┴─────────┐
+        |                  |
+        ▼                  ▼
+   SUPABASE SERVICES    ALLOCATION LOGIC
+        |                  |
+        ▼                  |
+   POSTGRESQL DATABASE     |
+        |                  |
+        └────────┬─────────┘
+                 |
+                 ▼
+         APPLICATION OUTPUT
+                 |
+       ┌─────────┼──────────┐
+       ▼         ▼          ▼
+    REQUESTS  RESOURCES  VOLUNTEERS
+                 |
+                 ▼
+          MAP AND DASHBOARD
 ```
 
----
-
-## 3. Technology Stack
-
-- **Frontend Framework:** React 18 (Vite)
-- **Language:** JavaScript (ESNext, Modern Modular Architecture)
-- **Styling:** CSS3 & Tailwind CSS (Emergency management SaaS palette, light mode, accessibility-tested)
-- **Routing:** React Router DOM (Client-side routing with role-specific views)
-- **Icons:** Lucide React
-- **Geographic Mapping:** Leaflet 1.9 & React-Leaflet (OpenStreetMap raster tiles, custom SVG pinpoint markers, geodesic distance lines)
-- **Database & Backend:** Supabase PostgreSQL (Row Level Security, Stored Procedures, Foreign Keys, Check Constraints)
-- **Backend SDK:** `@supabase/supabase-js`
-- **Deployment Platform:** Vercel (Includes `vercel.json` SPA rewrite rules)
+The frontend handles user interaction and presentation. Supabase provides database and backend services, while the allocation logic processes requests and generates recommendations.
 
 ---
 
-## 4. User Roles & Demo Login Architecture
-
-ResQLink provides four dedicated role dashboards with demo authentication simulating field user states:
-
-| Role | Default Demo Identity | Operational Capabilities |
-| :--- | :--- | :--- |
-| **NGO** | Care & Hope Foundation | Submits emergency requests, enters crisis coordinates, monitors urgency triage scores and delivery statuses. |
-| **Donor** | Apex Logistics Ltd | Registers relief inventories, edits stock quantities, toggles depot availability, and tracks allocation dispatches. |
-| **Volunteer** | Dr. Priya Sharma | Reviews assigned missions, accepts/declines transport tasks, updates duty readiness, and marks completed deliveries. |
-| **Admin** | State Disaster HQ | Central command dashboard, monitors system metrics, triggers multi-criteria matching, and executes atomic allocation approvals. |
-
-> **Academic Prototype Disclaimer:** The role selector on the login screen is a simulation designed to facilitate rapid academic evaluation of all workflows without credential barriers. Do not store real personal identity or real emergency distress data in this prototype.
-
----
-
-## 5. System Architecture & Project Structure
+## 11. 📁 Project Folder Structure
 
 ```text
 ResQLink/
+│
 ├── frontend/
 │   ├── src/
-│   ├── algorithms/
-│   │   ├── priority.js          # Urgency prioritization formula
-│   │   ├── distance.js          # Haversine distance calculator
-│   │   └── allocation.js        # Multi-criteria greedy matching engine
-│   ├── components/
-│   │   ├── Navbar.jsx           # Global header with live mode & role selector
-│   │   ├── Sidebar.jsx          # Role-specific responsive navigation
-│   │   ├── StatCard.jsx         # Metric visualization cards
-│   │   ├── StatusBadge.jsx      # Semantic status indicator badges
-│   │   ├── RequestForm.jsx      # Emergency request creator with live score preview
-│   │   ├── ResourceForm.jsx     # Relief inventory intake form
-│   │   ├── MatchingModal.jsx    # Transparent matching & recommendation modal
-│   │   ├── MapView.jsx          # Interactive Leaflet map with custom SVG markers
-│   │   └── LoadingState.jsx     # Loading feedback spinner
-│   ├── context/
-│   │   └── AuthContext.jsx      # Demo role state, session storage & notifications
-│   ├── lib/
-│   │   └── supabase.js          # Supabase client & fallback detector
-│   ├── pages/
-│   │   ├── Login.jsx            # Welcome screen & demo role selector
-│   │   ├── NGODashboard.jsx     # NGO operations & request submission
-│   │   ├── DonorDashboard.jsx   # Donor inventory & stock management
-│   │   ├── VolunteerDashboard.jsx # Volunteer tasks, profile & availability
-│   │   ├── AdminDashboard.jsx   # State HQ command center & triage queue
-│   │   ├── Requests.jsx         # Comprehensive requests registry
-│   │   ├── Resources.jsx        # Emergency inventory pool
-│   │   ├── Volunteers.jsx       # Field responder network roster
-│   │   ├── Allocations.jsx      # Allocation pipeline & approval workflow
-│   │   └── MapPage.jsx          # Full GIS situation map with vector inspection
-│   ├── services/
-│   │   ├── mockData.js          # Realistic seed data for offline demo mode
-│   │   ├── storageAdapter.js    # Local persistence adapter with reset button
-│   │   ├── requestService.js    # Requests CRUD & priority sorting
-│   │   ├── resourceService.js   # Resource stock management service
-│   │   ├── volunteerService.js  # Volunteer availability service
-│   │   └── allocationService.js # Allocation proposals & atomic approval
-│   ├── App.jsx                  # Main routing, layout & demo banners
-│   ├── main.jsx                 # Application entry point
-│   └── index.css                # Global styles, Tailwind & Leaflet customizations
+│   │   ├── algorithms/
+│   │   │   ├── priority.js
+│   │   │   ├── distance.js
+│   │   │   └── allocation.js
+│   │   │
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   ├── StatCard.jsx
+│   │   │   ├── StatusBadge.jsx
+│   │   │   ├── RequestForm.jsx
+│   │   │   ├── ResourceForm.jsx
+│   │   │   ├── MatchingModal.jsx
+│   │   │   ├── MapView.jsx
+│   │   │   └── LoadingState.jsx
+│   │   │
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx
+│   │   │
+│   │   ├── lib/
+│   │   │   └── supabase.js
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Login.jsx
+│   │   │   ├── NGODashboard.jsx
+│   │   │   ├── DonorDashboard.jsx
+│   │   │   ├── VolunteerDashboard.jsx
+│   │   │   ├── AdminDashboard.jsx
+│   │   │   ├── Requests.jsx
+│   │   │   ├── Resources.jsx
+│   │   │   ├── Volunteers.jsx
+│   │   │   ├── Allocations.jsx
+│   │   │   └── MapPage.jsx
+│   │   │
+│   │   ├── services/
+│   │   │   ├── mockData.js
+│   │   │   ├── storageAdapter.js
+│   │   │   ├── requestService.js
+│   │   │   ├── resourceService.js
+│   │   │   ├── volunteerService.js
+│   │   │   └── allocationService.js
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── public/
+│   ├── .env.example
+│   ├── package.json
+│   └── vite.config.js
+│
 ├── backend/
 │   └── supabase/
-│   ├── schema.sql               # PostgreSQL tables, indexes & stored procedures
-│   └── seed.sql                 # Sample dataset (8 requests, 8 resources, 6 volunteers)
-├── frontend/.env.example        # Supabase environment variables template
-├── .gitignore                   # Ignored files (node_modules, dist, .env)
-├── frontend/package.json        # Dependencies and build scripts
-├── vercel.json                  # Vercel deployment rewrites for SPA routing
-├── frontend/vite.config.js      # Vite configuration with chunk splitting
-└── README.md                    # Project documentation
+│       ├── schema.sql
+│       └── seed.sql
+│
+├── .gitignore
+├── vercel.json
+└── README.md
 ```
 
 ---
 
-## 6. Algorithmic Implementations
+## 12. 🧠 Algorithms and Technical Implementation
 
-### A. Priority Calculation Algorithm (`frontend/src/algorithms/priority.js`)
+The major technical highlight of ResQLink is its algorithm-based emergency allocation system.
 
-The priority calculation formula triages incoming emergency requests:
+### A. Priority Calculation Algorithm
 
-$$\text{priorityScore} = (\text{urgency} \times 20) + (\min(\text{peopleAffected}, 100) \times 0.5)$$
+File: `frontend/src/algorithms/priority.js`
 
-- **Urgency (1 to 5):** Contributes up to $5 \times 20 = 100$ points. Represents immediate threat to life, medical criticality, or structural danger.
-- **People Affected:** Weighted at 0.5 points per person and capped at 100 ($\le 50$ points) to prevent massive population figures from completely drowning out acute, severe emergencies.
-- **Maximum Theoretical Score:** 150.00 points.
+The system calculates a priority score using urgency and the number of affected people.
 
-**Priority Categories:**
-- **Critical:** $\text{Score} \ge 85$ (Immediate crisis, trauma medical kits, flooded clinics)
-- **High:** $65 \le \text{Score} < 85$ (Urgent potable water, food rations, oxygen supply)
-- **Medium:** $40 \le \text{Score} < 65$ (Sanitation kits, secondary shelters)
-- **Low:** $\text{Score} < 40$ (Non-emergency stationary, recovery supplies)
+**Formula:**
 
----
+```text
+Priority Score =
+(Urgency × 20) +
+(Minimum of People Affected and 100 × 0.5)
+```
 
-### B. Haversine Distance Formula (`frontend/src/algorithms/distance.js`)
+Urgency is measured on a scale of 1 to 5.
 
-To compute the approximate great-circle distance between two geographic coordinates $(\text{lat}_1, \text{lon}_1)$ and $(\text{lat}_2, \text{lon}_2)$ on the spherical Earth:
+People affected contribute 0.5 points per person, with a maximum contribution of 50 points.
 
-$$a = \sin^2\left(\frac{\Delta \text{lat}}{2}\right) + \cos(\text{lat}_1) \cdot \cos(\text{lat}_2) \cdot \sin^2\left(\frac{\Delta \text{lon}}{2}\right)$$
+**Priority categories:**
 
-$$c = 2 \cdot \text{atan2}\left(\sqrt{a}, \sqrt{1 - a}\right)$$
+| Score | Priority |
+|---|---|
+| 85 and above | Critical |
+| 65 to below 85 | High |
+| 40 to below 65 | Medium |
+| Below 40 | Low |
 
-$$d = R \cdot c$$
+Maximum theoretical score: 150.
+
+This approach helps identify requests that require immediate attention.
+
+### B. Haversine Distance Algorithm
+
+File: `frontend/src/algorithms/distance.js`
+
+The Haversine formula calculates the approximate great-circle distance between two geographical coordinates on Earth.
+
+It is used to compare the locations of:
+
+- Emergency requests.
+- Resource depots.
+- Volunteers.
+
+The formula is:
+
+```text
+a = sin²(Δlat / 2)
+    + cos(lat1) × cos(lat2)
+    × sin²(Δlon / 2)
+
+c = 2 × atan2(√a, √(1-a))
+
+Distance = R × c
+```
 
 Where:
-- $R \approx 6371.0088\text{ km}$ (mean radius of Earth).
-- Input angles are converted from degrees to radians.
-- Distance is returned in kilometers rounded to two decimal places.
+
+- R = 6371.0088 km (mean Earth radius).
+- Latitude and longitude are converted into radians.
+- The final distance is expressed in kilometers.
+
+### C. Multi-Criteria Greedy Matching Algorithm
+
+File: `frontend/src/algorithms/allocation.js`
+
+The matching system identifies suitable resources and volunteers for an emergency request.
+
+The process involves:
+
+1. Filtering resources according to the required resource category.
+2. Excluding unavailable or depleted resources.
+3. Checking whether sufficient inventory exists.
+4. Calculating distances between the request and resource depots.
+5. Ranking eligible resources by proximity.
+6. Identifying volunteer skills required for the resource category.
+7. Filtering volunteers according to availability and skills.
+8. Ranking suitable volunteers according to distance and transportation capabilities.
+9. Generating explanations for matching and exclusion decisions.
+
+**Example skill mapping:**
+
+| Resource category | Relevant volunteer skills |
+|---|---|
+| Medicine | Medical assistance, Transportation |
+| Food and Water | Food distribution, Transportation, Logistics |
+| Shelter | Rescue support, Logistics, General assistance |
+
+The algorithm aims to recommend a suitable combination of available resources and volunteers.
+
+### D. Atomic Allocation and Data Integrity
+
+File: `backend/supabase/schema.sql`
+
+The database includes an allocation approval procedure designed to maintain inventory consistency.
+
+Its responsibilities include:
+
+- Locking the allocation record during approval.
+- Checking available resource quantity.
+- Deducting allocated stock.
+- Updating resource status when stock becomes depleted.
+- Updating the emergency request status.
+- Updating volunteer availability.
+- Changing the allocation status to approved.
+
+This helps prevent duplicate allocation and inventory conflicts.
 
 ---
 
-### C. Multi-Criteria Greedy Matching Algorithm (`frontend/src/algorithms/allocation.js`)
+## 13. 🗄️ Database Design
 
-For any selected emergency request:
-1. **Resource Category Filter:** Filters resources where `resource_type == request.resource_type`.
-2. **Status & Inventory Check:** Discards resources marked as `Unavailable`, `Depleted`, or with `quantity <= 0`.
-3. **Proximity Ranking:** Applies the Haversine formula between the request coordinates and each depot coordinate, sorting candidates closest first.
-4. **Skill Mapping:** Identifies required volunteer competencies based on resource category:
-   - *Medicines / Medical Equipment:* `Medical assistance`, `Transportation`
-   - *Food / Drinking Water:* `Food distribution`, `Transportation`, `Logistics`
-   - *Shelter / Other:* `Rescue support`, `Logistics`, `General assistance`
-5. **Volunteer Availability & Distance:** Filters volunteers where `available == true` who possess matching skills, computes their distance to the emergency site, and ranks them by proximity (with vehicle bonus).
-6. **Transparent Diagnostics:** Generates diagnostic strings explaining why other resources/volunteers were excluded or ranked lower.
+ResQLink uses Supabase PostgreSQL for persistent data management.
 
----
+The database schema includes the data required for:
 
-### D. Data Integrity & Atomic Transactions (`backend/supabase/schema.sql`)
+- User and role management.
+- Emergency requests.
+- Resource inventory.
+- Volunteer information.
+- Allocation records.
 
-To prevent duplicate allocations and race conditions, allocation confirmation is handled via an atomic PostgreSQL stored procedure:
+The SQL implementation includes relational constraints, indexes, Row Level Security policies and stored procedures.
 
-```sql
-CREATE OR REPLACE FUNCTION approve_allocation(p_allocation_id UUID)
-RETURNS JSONB
-LANGUAGE plpgsql
-SECURITY DEFINER
-AS $$
-...
+Database files:
+
+```text
+backend/
+└── supabase/
+    ├── schema.sql
+    └── seed.sql
 ```
 
-**Integrity Guarantees:**
-1. Locks the allocation record with `FOR UPDATE`.
-2. Rechecks that the associated resource still possesses `quantity >= allocation.quantity`.
-3. Atomically subtracts `allocation.quantity` from `resources.quantity`.
-4. Sets the resource status to `Depleted` if remaining stock reaches 0.
-5. Updates `emergency_requests.status` to `Assigned`.
-6. Sets `volunteers.available` to `false`.
-7. Transitions `allocations.status` to `Approved`.
+The `schema.sql` file defines the database structure and allocation-related procedures.
+
+The `seed.sql` file inserts fictional sample records for demonstration.
 
 ---
 
-## 7. Sample Demonstration Data
-
-The project includes realistic fictional seed data centered on an urban disaster relief zone ($\approx 13.04^\circ\text{N} - 13.12^\circ\text{N}$, $80.20^\circ\text{E} - 80.29^\circ\text{E}$):
-
-- **8 Emergency Requests:** Ranging from Critical (Urgency 5 insulin shortage, score: 150) to Low (stationery sets, score: 30).
-- **8 Resource Depots:** Medicines, water, ration packets, tarpaulins, oxygen concentrators, including one depleted/unavailable batch to verify exclusion logic.
-- **6 Field Volunteers:** Doctors, truck drivers, rescue personnel with various skills, vehicle types, and on-duty statuses.
-- **3 Sample Allocations:** Across Proposed, Approved, and Completed statuses.
-
----
-
-## 8. Installation & Local Development
+## 14. 💻 Installation and Setup
 
 ### Prerequisites
-- **Node.js:** v18.0.0 or higher
-- **npm:** v9.0.0 or higher
 
-### Step 1: Clone the Repository
+Install the following:
+
+- Node.js v18 or higher.
+- npm v9 or higher.
+- Git.
+- Visual Studio Code (recommended).
+
+### Step 1: Clone the repository
+
 ```bash
 git clone https://github.com/ishitasingh16/resqlink.git
+```
+
+### Step 2: Open the project directory
+
+```bash
 cd resqlink
 ```
 
-### Step 2: Install Dependencies
+### Step 3: Navigate to the frontend
+
 ```bash
 cd frontend
+```
+
+### Step 4: Install dependencies
+
+```bash
 npm install
 ```
 
-### Step 3: Run the Development Server
+---
+
+## 15. 🔑 Supabase Configuration
+
+To connect the application to a Supabase database:
+
+### Step 1: Create a Supabase project
+
+Visit:
+
+https://supabase.com
+
+Create a new project.
+
+### Step 2: Configure the database
+
+Open the Supabase SQL Editor.
+
+Execute:
+
+```text
+backend/supabase/schema.sql
+```
+
+This creates the required database tables, constraints, indexes, security policies and stored procedures.
+
+### Step 3: Insert demonstration data
+
+Execute:
+
+```text
+backend/supabase/seed.sql
+```
+
+This inserts fictional emergency requests, resources, volunteers and allocations.
+
+### Step 4: Configure environment variables
+
+Copy the environment example file:
+
+```bash
+cp .env.example .env
+```
+
+Add your Supabase project credentials:
+
+```env
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+
+VITE_SUPABASE_ANON_KEY=your-public-anon-key
+```
+
+Restart the development server after configuring the environment variables.
+
+**Security Note:** Never expose a Supabase service-role key in frontend code or commit private credentials to GitHub. Configure appropriate database security policies before using real data.
+
+---
+
+## 16. ▶️ Running the Application
+
+From the frontend directory, execute:
+
 ```bash
 npm run dev
 ```
-Open your browser at `http://localhost:3000`.
 
-> **Instant Demo Mode:** If Supabase credentials are not configured, ResQLink automatically launches in **Demo Mode** with persistent local storage and sample data. All forms, matching algorithms, status updates, and map markers function immediately without requiring a backend setup!
+Vite will display the local development URL in the terminal.
 
----
+Open that URL in your browser.
 
-## 9. Supabase PostgreSQL Setup Instructions
+### Demo Mode
 
-To connect ResQLink to your live Supabase cloud database:
+If Supabase credentials are not configured, the application supports a demonstration mode using sample data and local persistence.
 
-1. **Create a Supabase Project:**
-   - Go to [https://supabase.com](https://supabase.com) and create a new project.
-   - Note your **Project URL** and **anon / public key** from `Project Settings` > `API`.
-
-2. **Execute the Database Schema:**
-   - In your Supabase dashboard, navigate to **SQL Editor**.
-   - Copy the contents of [`backend/supabase/schema.sql`](backend/supabase/schema.sql) and click **Run**.
-   - This creates tables, check constraints, indexes, RLS policies, and stored procedures (`approve_allocation`, `complete_allocation`, `reject_allocation`).
-
-3. **Insert the Seed Data:**
-   - In the SQL Editor, copy the contents of [`backend/supabase/seed.sql`](backend/supabase/seed.sql) and click **Run**.
-   - This populates sample requests, donors, volunteers, and allocations.
-
-4. **Configure Environment Variables:**
-   - Copy `frontend/.env.example` to `frontend/.env`:
-     ```bash
-     cp frontend/.env.example frontend/.env
-     ```
-   - Add your Supabase credentials:
-     ```env
-     VITE_SUPABASE_URL=https://your-project-id.supabase.co
-     VITE_SUPABASE_ANON_KEY=your-anon-public-key
-     ```
-   - Restart the Vite dev server (`npm run dev`). The header badge will change to **Supabase Live**.
+This allows users to explore the main workflows without connecting a live database.
 
 ---
 
-## 10. Vercel Deployment Instructions
+## 17. 🚀 Deployment
 
-ResQLink includes `vercel.json` configured with SPA rewrites to ensure direct route navigation works without 404 errors.
+ResQLink is configured for deployment through Vercel.
 
-### Deploying via Vercel CLI
-1. Install Vercel CLI: `npm install -g vercel`
-2. Run `vercel` in the project root.
-3. Follow the CLI prompts to deploy.
+### Deployment using GitHub
 
-### Deploying via GitHub & Vercel Dashboard
-1. Push your repository to GitHub.
-2. Log in to [Vercel](https://vercel.com) and click **Add New** > **Project**.
-3. Import your `resqlink` repository.
-4. Set Framework Preset: **Vite**.
-5. In **Environment Variables**, add:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-   *(Optional: If left blank, the live deployment will run in Demo Mode).*
-6. Click **Deploy**.
+1. Push the project code to GitHub.
+2. Visit https://vercel.com
+3. Sign in using GitHub.
+4. Select Add New → Project.
+5. Import the ResQLink repository.
+6. Configure the project build settings according to `vercel.json`.
+7. Add the required Supabase environment variables if using the live database.
+8. Click Deploy.
 
----
+The repository includes `vercel.json` with configuration for the frontend build and single-page application routing.
 
-## 11. Testing & Verification Checklist
-
-- [x] **Vite Build:** `npm run build` runs cleanly with zero errors and optimized vendor chunk splitting.
-- [x] **Role Authentication Simulation:** Instant switching between NGO, Donor, Volunteer, and Admin.
-- [x] **Priority Calculation:** Verified live calculation `(urgency * 20) + (min(people, 100) * 0.5)` with automatic Critical/High/Medium/Low categorization.
-- [x] **Haversine Distance Engine:** Accurate kilometer calculations across all coordinates.
-- [x] **Smart Matching Algorithm:** Ranks nearest resources and skilled volunteers; excludes unavailable/depleted stocks.
-- [x] **Atomic Allocation Approval:** Atomically checks stock, updates resource quantity, transitions request status, and locks volunteer availability.
-- [x] **OpenStreetMap & Leaflet:** Renders color-coded markers (Red requests, Green resources, Blue volunteers), popups, distance vectors, and legend.
-- [x] **Reset Demo Data:** One-click reset button in sidebar to return to the original seed state.
+Vercel generates a public deployment URL after a successful build.
 
 ---
 
-## 12. Limitations & Future Scope
+## 18. 🧪 Testing and Verification
 
-### Prototype Limitations
-- Role authorization is simulated for academic demonstration and does not use cryptographically signed JSON Web Tokens (JWT).
-- The matching algorithm uses greedy proximity optimization rather than mixed-integer linear programming (MILP) or multi-depot vehicle routing (MDVRP).
-- Coordinates are synthetic demo values.
+The following areas should be tested before project evaluation.
 
-### Future Scope
-- Implementation of OpenRouteService / OSRM API for turn-by-turn road network routing and live traffic delays.
-- Real-time SMS / WhatsApp emergency alerts via Twilio API.
-- End-to-end user authentication via Supabase Auth with OAuth2 / SAML single sign-on.
-- Multi-party split deliveries for large emergency quotas across multiple depots.
+| Test Area | Expected Result |
+|---|---|
+| Application Build | Vite build completes successfully |
+| Role Selection | Users can switch between demonstration roles |
+| Emergency Requests | Requests can be submitted and tracked |
+| Priority Calculation | Correct priority score and category |
+| Distance Calculation | Accurate geographical distance |
+| Resource Management | Inventory quantity and availability update correctly |
+| Volunteer Management | Skills and availability are maintained |
+| Smart Matching | Suitable resources and volunteers are recommended |
+| Allocation Approval | Stock and request status are updated consistently |
+| Map Visualization | Requests, resources and volunteers appear on the map |
+| Demo Data Reset | Application returns to its initial sample state |
+
+Run the production build test:
+
+```bash
+npm run build
+```
 
 ---
 
-## 13. Academic Project Attribution
+## 19. ⚠️ Limitations
 
-- **Project:** ResQLink - Intelligent Emergency Resource Allocation and Volunteer Coordination Platform
-- **Degree:** Bachelor of Technology (B.Tech)
-- **Academic Year:** 2026
-- **License:** MIT License
+ResQLink is an academic prototype and has the following limitations:
+
+- Role-based access is simulated for demonstration rather than implemented using production-grade authentication.
+- Geographical coordinates in the sample dataset are synthetic.
+- The matching system uses greedy proximity-based optimization rather than advanced global optimization methods.
+- Road-network routing and real-time traffic information are not currently included.
+- Demonstration data should not be treated as verified emergency information.
+- The prototype is not intended to replace official emergency response systems.
+
+---
+
+## 20. 🔮 Future Enhancements
+
+Possible future improvements include:
+
+1. **Real-Time Emergency Notifications:** Integrate SMS and WhatsApp notifications using services such as Twilio.
+
+2. **Advanced Authentication:** Implement Supabase Auth with secure role-based access.
+
+3. **Road-Network Routing:** Integrate OpenRouteService or OSRM for practical route estimation and navigation.
+
+4. **Machine Learning-Based Demand Prediction:** Analyze historical emergency data to estimate future resource requirements.
+
+5. **Advanced Optimization:** Explore optimization methods such as the Hungarian Algorithm, Mixed-Integer Linear Programming and vehicle-routing algorithms.
+
+6. **Multiple Resource Allocation:** Support splitting large requirements across multiple resource depots.
+
+7. **Live Location Tracking:** Enable real-time tracking of volunteer and delivery locations.
+
+8. **Scalable Emergency Coordination:** Extend the platform to support multiple NGOs and disaster-response organizations.
+
+---
+
+## 21. 🎓 Academic Project Information
+
+**Project Name:** ResQLink
+
+**Project Title:** Intelligent Emergency Resource Allocation and Volunteer Coordination Platform
+
+**Project Type:** Full-Stack Web Application
+
+**Degree:** Bachelor of Technology (B.Tech)
+
+**Specialization:** Computer Science and Engineering – Artificial Intelligence and Machine Learning
+
+**Academic Year:** 2026
+
+**Repository:** https://github.com/ishitasingh16/resqlink
+
+**Development Tools:** Google Antigravity, Visual Studio Code and GitHub
+
+**Deployment Platform:** Vercel
+
+---
+
+## 📜 License
+
+This project is intended for academic and educational purposes.
+
+The repository specifies the MIT License. Refer to the project's license file for the applicable terms.
+
+---
+
+## ❤️ Project Vision
+
+**Connecting Help. Saving Time.**
+
+ResQLink aims to make emergency relief coordination more organized by bringing requests, resources and volunteers together through technology and intelligent allocation.
+
+Every resource matters. Every minute matters. Every life matters.
